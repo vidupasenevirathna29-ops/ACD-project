@@ -1,0 +1,106 @@
+import { useState, useEffect } from "react";
+import data from "../data/properties.json";
+import PropertyCard from "../components/PropertyCard";
+import FavouritesList from "../components/FavouritesList";
+import SearchForm from "../components/SearchForm";
+
+const monthMap = {
+  January: 0,
+  February: 1,
+  March: 2,
+  April: 3,
+  May: 4,
+  June: 5,
+  July: 6,
+  August: 7,
+  September: 8,
+  October: 9,
+  November: 10,
+  December: 11,
+};
+
+function convertToDate(p) {
+  return new Date(p.added.year, monthMap[p.added.month], p.added.day);
+}
+
+function SearchPage() {
+  const [properties, setProperties] = useState([]);
+  const [filtered, setFiltered] = useState([]);
+
+  useEffect(() => {
+    setProperties(data.properties);
+    setFiltered(data.properties);
+  }, []);
+
+  const handleSearch = (filters) => {
+    const {
+      type,
+      minPrice,
+      maxPrice,
+      minBeds,
+      maxBeds,
+      startDate,
+      endDate,
+      postcode
+    } = filters;
+
+    let result = [...properties];
+
+    if (type !== "any") {
+      result = result.filter((p) => p.type === type);
+    }
+
+    if (minPrice !== null) result = result.filter((p) => p.price >= minPrice);
+    if (maxPrice !== null) result = result.filter((p) => p.price <= maxPrice);
+
+    if (minBeds !== null) result = result.filter((p) => p.bedrooms >= minBeds);
+    if (maxBeds !== null) result = result.filter((p) => p.bedrooms <= maxBeds);
+
+    if (startDate || endDate) {
+      const start = startDate ? new Date(startDate) : null;
+      const end = endDate ? new Date(endDate) : null;
+
+      result = result.filter((p) => {
+        const d = convertToDate(p);
+        if (start && d < start) return false;
+        if (end && d > end) return false;
+        return true;
+      });
+    }
+
+    if (postcode) {
+      result = result.filter((p) =>
+        p.location.toUpperCase().includes(postcode)
+      );
+    }
+
+    setFiltered(result);
+  };
+
+  return (
+    <div style={{ display: "flex", gap: "25px" }}>
+      <div style={{ flex: 3 }}>
+        <h1>Property Search</h1>
+
+        <SearchForm onSearch={handleSearch} />
+
+        <div className="results-grid">
+          {filtered.length === 0 && (
+            <p><strong>No matching properties</strong></p>
+          )}
+
+          {filtered.map((p) => (
+            <PropertyCard key={p.id} property={p} />
+          ))}
+        </div>
+      </div>
+
+      <div style={{ flex: 1 }}>
+  <FavouritesList allProperties={properties} />
+</div>
+
+    </div>
+  );
+}
+
+export default SearchPage;
