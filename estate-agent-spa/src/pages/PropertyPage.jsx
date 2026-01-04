@@ -6,12 +6,16 @@ import "react-tabs/style/react-tabs.css";
 
 function PropertyPage() {
   const { id } = useParams();
-  const property = data.properties.find((p) => p.id === id);
+
+  const property = data.properties.find((p) => String(p.id) === String(id));
 
   if (!property) {
     return (
       <div style={{ padding: "20px" }}>
-        <p>Property not found.</p>
+        <h2>Property not found</h2>
+        <p>
+          The property ID <strong>{id}</strong> was not found in the data file.
+        </p>
         <Link to="/">← Back to search</Link>
       </div>
     );
@@ -23,18 +27,21 @@ function PropertyPage() {
     <div style={{ padding: "20px", maxWidth: "1000px", margin: "0 auto" }}>
       <Link to="/">← Back to search</Link>
 
-      <h1>
-        {property.type} – £{property.price.toLocaleString()}
+      <h1 style={{ marginTop: "10px" }}>
+        {property.type} – £{Number(property.price).toLocaleString()}
       </h1>
-      <p>{property.location}</p>
-      <p>{property.bedrooms} bedrooms · Tenure: {property.tenure}</p>
 
-      {/* Gallery */}
+      <p style={{ margin: "6px 0" }}>{property.location}</p>
+      <p style={{ margin: "6px 0" }}>
+        {property.bedrooms} bedrooms · Tenure: {property.tenure}
+      </p>
+
+      {/* ✅ Gallery */}
       <section style={{ margin: "20px 0" }}>
         <PropertyGallery property={property} />
       </section>
 
-      {/* Tabs */}
+      {/* ✅ Tabs */}
       <Tabs>
         <TabList>
           <Tab>Description</Tab>
@@ -54,6 +61,11 @@ function PropertyPage() {
             alt="Floor plan"
             style={{ maxWidth: "100%", borderRadius: "8px" }}
           />
+          {!property.floorplan && (
+            <p style={{ marginTop: "10px" }}>
+              (Placeholder floor plan shown)
+            </p>
+          )}
         </TabPanel>
 
         <TabPanel>
@@ -61,7 +73,12 @@ function PropertyPage() {
           <iframe
             title="location-map"
             src={`https://www.google.com/maps?q=${mapQuery}&output=embed`}
-            style={{ width: "100%", height: "300px", borderRadius: "8px", border: 0 }}
+            style={{
+              width: "100%",
+              height: "320px",
+              borderRadius: "8px",
+              border: 0,
+            }}
             loading="lazy"
           ></iframe>
         </TabPanel>
