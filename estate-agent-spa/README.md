@@ -1,3 +1,12 @@
+## Project Links
+
+- GitHub Repository:  
+  https://github.com/vidupasenevirathna29-ops/ACD-project
+
+- GitHub Pages (Live Site):  
+  https://vidupasenevirathna29-ops.github.io/ACD-project/
+
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

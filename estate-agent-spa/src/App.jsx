@@ -6,7 +6,7 @@ import { FavouritesProvider } from "./context/FavouritesContext";
 export default function App() {
   return (
     <FavouritesProvider>
-      <BrowserRouter>
+      <BrowserRouter basename="/ACD-project">
         <Routes>
           <Route path="/" element={<SearchPage />} />
           <Route path="/property/:id" element={<PropertyPage />} />
