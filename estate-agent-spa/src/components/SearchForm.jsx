@@ -25,6 +25,28 @@ function SearchForm({ onSearch }) {
     });
   };
 
+  const handleReset = () => {
+    setType("any");
+    setMinPrice("");
+    setMaxPrice("");
+    setMinBeds("");
+    setMaxBeds("");
+    setStartDate("");
+    setEndDate("");
+    setPostcode("");
+    // trigger search with cleared filters
+    onSearch({
+      type: "any",
+      minPrice: null,
+      maxPrice: null,
+      minBeds: null,
+      maxBeds: null,
+      startDate: null,
+      endDate: null,
+      postcode: null,
+    });
+  };
+
   return (
     <form onSubmit={handleSubmit} className="search-form">
       <h3>Search Filters</h3>
@@ -118,9 +140,14 @@ function SearchForm({ onSearch }) {
         </label>
       </div>
 
-      <button type="submit" className="search-button">
-        Search
-      </button>
+      <div style={{ display: "flex", gap: "10px" }}>
+        <button type="submit" className="search-button">
+          Search
+        </button>
+        <button type="button" className="search-button" onClick={handleReset}>
+          Reset
+        </button>
+      </div>
     </form>
   );
 }
