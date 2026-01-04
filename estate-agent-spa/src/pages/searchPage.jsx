@@ -26,6 +26,8 @@ function convertToDate(p) {
 function SearchPage() {
   const [properties, setProperties] = useState([]);
   const [filtered, setFiltered] = useState([]);
+  const [lastFilters, setLastFilters] = useState(null);
+  const [lastCount, setLastCount] = useState(0);
 
   useEffect(() => {
     setProperties(data.properties);
@@ -33,6 +35,7 @@ function SearchPage() {
   }, []);
 
   const handleSearch = (filters) => {
+    console.log("Search filters:", filters);
     const {
       type,
       minPrice,
@@ -74,7 +77,10 @@ function SearchPage() {
       );
     }
 
+    console.log("Filtered result count:", result.length, result.map((p) => p.id));
     setFiltered(result);
+    setLastFilters(filters);
+    setLastCount(result.length);
   };
 
   return (
@@ -83,6 +89,12 @@ function SearchPage() {
         <h1>Property Search</h1>
 
         <SearchForm onSearch={handleSearch} />
+
+        {lastFilters && (
+          <div style={{ marginTop: 12, color: "#ccc", fontSize: "0.95em" }}>
+            <strong>Last search:</strong>&nbsp;{JSON.stringify(lastFilters)} — <strong>Results:</strong>&nbsp;{lastCount}
+          </div>
+        )}
 
         <div className="results-grid">
           {filtered.length === 0 && (
