@@ -1,19 +1,17 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import SearchPage from "./pages/SearchPage";
-import PropertyPage from "./pages/PropertyPage";
-import { FavouritesProvider } from "./context/FavouritesContext";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import SearchPage from "./pages/searchPage.jsx";
+import PropertyPage from "./pages/PropertyPage.jsx";
+import { FavouritesProvider } from "./context/FavouritesContext.jsx";
 
-function App() {
+export default function App() {
   return (
     <FavouritesProvider>
-      <Router>
+      <BrowserRouter>
         <Routes>
           <Route path="/" element={<SearchPage />} />
           <Route path="/property/:id" element={<PropertyPage />} />
         </Routes>
-      </Router>
+      </BrowserRouter>
     </FavouritesProvider>
   );
 }
-
-export default App;
