@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useFavourites } from "../context/FavouritesContext";
+import "./PropertyCard.css";
 
 function PropertyCard({ property }) {
   const { addFavourite } = useFavourites();
@@ -23,7 +24,7 @@ function PropertyCard({ property }) {
       <p>{property.bedrooms} bedrooms</p>
       <p>{property.location}</p>
 
-      <div style={{ display: "flex", gap: "8px", marginTop: "8px" }}>
+      <div>
         <button onClick={() => addFavourite(property)}>❤️ Favourite</button>
         <Link to={`/property/${property.id}`}>
           <button>View Details</button>
