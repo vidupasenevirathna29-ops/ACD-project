@@ -1,4 +1,5 @@
 import { useFavourites } from "../context/FavouritesContext";
+import "./FavouritesList.css";
 
 function FavouritesList({ allProperties }) {
   const { favourites, addFavourite, removeFavourite, clearFavourites } =
@@ -29,7 +30,6 @@ function FavouritesList({ allProperties }) {
       <button
         onClick={clearFavourites}
         disabled={favourites.length === 0}
-        style={{ marginBottom: "10px" }}
       >
         Clear All
       </button>
@@ -37,9 +37,8 @@ function FavouritesList({ allProperties }) {
       <ul>
         {favourites.map((p) => (
           <li key={p.id}>
-            {p.type} – £{p.price.toLocaleString()}
+            <span>{p.type} – £{p.price.toLocaleString()}</span>
             <button
-              style={{ marginLeft: "6px" }}
               onClick={() => removeFavourite(p.id)}
             >
               ✕
