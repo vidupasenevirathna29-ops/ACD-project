@@ -10,13 +10,18 @@ function PropertyCard({ property }) {
     e.dataTransfer.setData("text/plain", property.id);
   };
 
+  // Resolve images placed in `src/assets/` at runtime using Vite's import.meta.url
+  let imgSrc = property.picture;
+  try {
+    // property.picture in the JSON is e.g. "images/prop1pic1small.jpg"
+    imgSrc = new URL(`../assets/${property.picture}`, import.meta.url).href;
+  } catch (err) {
+    // fallback: leave as-is (could be an absolute URL or already correct)
+  }
+
   return (
-    <article
-      className="property-card"
-      draggable
-      onDragStart={handleDragStart}
-    >
-      <img src={property.picture} alt={property.location} width="220" />
+    <article className="property-card" draggable onDragStart={handleDragStart}>
+      <img src={imgSrc} alt={property.location} />
 
       <h3>
         {property.type} – £{property.price.toLocaleString()}
