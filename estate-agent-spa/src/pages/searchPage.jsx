@@ -78,8 +78,8 @@ function SearchPage() {
   };
 
   return (
-    <div style={{ display: "flex", gap: "25px" }}>
-      <div style={{ flex: 3 }}>
+    <div className="search-container">
+      <div className="search-main">
         <h1>Property Search</h1>
 
         <SearchForm onSearch={handleSearch} />
@@ -95,7 +95,7 @@ function SearchPage() {
         </div>
       </div>
 
-      <div style={{ flex: 1 }}>
+      <div className="search-sidebar">
   <FavouritesList allProperties={properties} />
 </div>
 
