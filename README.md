@@ -6,7 +6,6 @@
   https://github.com/vidupasenevirathna29-ops/ACD-project
 
 - GitHub Pages Link:  
-  https://vidupasenevirathna29-ops.github.io/ACD-project/
 
 
 
